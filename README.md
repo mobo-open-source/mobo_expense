@@ -161,4 +161,5 @@ See the [LICENSE](LICENSE) file for the main license and [THIRD_PARTY_LICENSES.m
 ## Maintainers
 
 - **Team Mobo** at Cybrosys Technologies
--  [mobo@cybrosys.com](mailto:mobo@cybrosys.com)
+- Email: [mobo@cybrosys.com](mailto:mobo@cybrosys.com)
+- Website: https://www.cybrosys.com/mobo
