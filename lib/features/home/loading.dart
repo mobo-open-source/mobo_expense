@@ -54,8 +54,10 @@ class _LoadingState extends State<Loading> {
       bottomProvider.changeIndex(0);
 
       await userProvider.checkCurrentUserRole();
+      if (!mounted) return;
 
       await context.read<ProfileProvider>().fetchUserProfile();
+      if (!mounted) return;
 
       Navigator.pushAndRemoveUntil(
         context,
@@ -63,6 +65,7 @@ class _LoadingState extends State<Loading> {
         (Route<dynamic> route) => false,
       );
     } catch (e) {
+      if (!mounted) return;
       CustomSnackbar.showError(
         context,
         ' ${e.toString().split("message:").last.split(",").first.trim()}',
