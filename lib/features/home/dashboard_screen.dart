@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -13,6 +13,7 @@ import '../../core/widgets/barchart_card.dart';
 import '../../core/widgets/business_card.dart';
 import '../../shared/widgets/snackbars/custom_snackbar.dart';
 import '../profile/providers/profile_provider.dart';
+import '../review/services/review_service.dart';
 
 class DashboardScreen extends StatefulWidget {
   final bool istest;
@@ -29,6 +30,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (widget.istest) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _initialLoading());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ReviewService().checkAndShowRating(context);
+    });
   }
 
   Future<void> _initialLoading() async {
@@ -43,6 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       expense.setInitialLoading(true);
       await user.getUserDetails(context);
       await expense.getOdooVersion();
+
       await expense.getExpenses(context, user.isAdmin);
       await common.getCompanyWiseCategories();
       await expense.gettingPurchaseJournal();

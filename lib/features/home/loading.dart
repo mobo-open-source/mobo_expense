@@ -5,6 +5,7 @@ import 'package:mobo_expenses/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/constants.dart';
 import '../../shared/widgets/snackbars/custom_snackbar.dart';
+import '../company/providers/company_provider.dart';
 import '../login/pages/server_setup_screen.dart';
 import '../profile/providers/profile_provider.dart';
 import 'home_screen.dart';
@@ -24,6 +25,8 @@ class _LoadingState extends State<Loading> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         initialLoading();
+        context.read<CompanyProvider>().initialize();
+        context.read<ProfileProvider>().fetchUserProfile();
       }
     });
   }

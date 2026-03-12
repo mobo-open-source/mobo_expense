@@ -85,9 +85,7 @@ class ExpenseProvider extends ChangeNotifier {
   /// fetching odoo version
   getOdooVersion() async {
     final session = await OdooSessionManager.getCurrentSession();
-
     final version = session!.odooSession.serverVersion;
-
     odooVersion = version;
     notifyListeners();
   }

@@ -56,7 +56,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
       listen: false,
     ).odooVersion;
 
-    if (version == '18' || version == '17') {
+    if (version.contains('18') || version.contains('17')) {
       final res = await services.gettingState(widget.expense.id);
       state = res;
     }
@@ -146,7 +146,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                           ),
                         ),
                       )
-                    : InkWell(
+                    :  userProvider.isAdmin ?InkWell(
                         key: Key("invoice"),
                         onTap: () {
                           Navigator.push(
@@ -164,7 +164,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                             color: isDark ? Colors.white : Colors.grey.shade700,
                           ),
                         ),
-                      )
+                      ):SizedBox.shrink()
               : SizedBox.shrink(),
 
           userProvider.isAdmin
@@ -262,7 +262,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                       ),
                     ];
 
-                    if (expenseProvider.odooVersion == "19") {
+                    if (expenseProvider.odooVersion.contains("19")  ) {
                       if (widget.expense.state == 'draft') {
                         items.addAll([
                           PopupMenuItem(

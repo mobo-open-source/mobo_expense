@@ -64,7 +64,7 @@ class UserServices {
 
       bool hasExpenseManager = false;
 
-      if (version == '17') {
+      if (version.contains('17')) {
         hasExpenseManager = await client.callKw({
           'model': 'res.users',
           'method': 'has_group',
