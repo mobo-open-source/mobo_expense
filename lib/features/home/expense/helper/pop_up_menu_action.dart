@@ -180,7 +180,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
           listen: false,
         ).odooVersion;
 
-        if (version == '19') {
+        if (version.contains('19')) {
           final result = await expenseProvider.buttonAction(
             'action_submit',
             'hr.expense',
@@ -276,7 +276,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
           listen: false,
         ).odooVersion;
 
-        if (version == '19') {
+        if (version.contains('19')) {
           final result = await expenseProvider.buttonAction(
             'action_approve',
             'hr.expense',
@@ -377,7 +377,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
           context,
           listen: false,
         ).odooVersion;
-        if (version == "19") {
+        if (version.contains('19')) {
           final result = await expenseProvider.buttonAction(
             'action_reset',
             'hr.expense',
@@ -483,7 +483,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
             ).odooVersion;
 
             try {
-              if (version == '19') {
+              if (version.contains('19')) {
                 await expenseProvider.refuseAction(
                   expense.id,
                   context,
@@ -555,7 +555,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
             listen: false,
           ).odooVersion;
 
-          if (version == '19') {
+          if (version.contains('19')) {
             dialogBox(
               context,
               "Post Expenses",
@@ -716,7 +716,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
                 ],
               ),
             );
-          } else if (version == '17') {
+          } else if (version.contains('17')) {
             loadingDialog(
               context,
               "Journal Posting",
@@ -871,7 +871,7 @@ gettingSelected(String value, BuildContext context, Expense expense) async {
                       final version = session!.odooSession.serverVersion;
 
                       try {
-                        if (version == '19') {
+                        if (version.contains('19')) {
                           final result = await expenseProvider
                               .postJournalAction(
                                 expense.id,

@@ -34,7 +34,8 @@ class ProfileHeaderCard extends StatelessWidget {
     }
 
     Widget photoWidget = avatar != null
-        ? ClipOval(
+        ?
+    ClipOval(
             child: Image.memory(
               avatar!,
               height: 50,

@@ -222,6 +222,7 @@ class OdooSessionManager {
         expiresAt: DateTime.now().add(const Duration(hours: 24)),
         selectedCompanyId: saved.selectedCompanyId,
         allowedCompanyIds: saved.allowedCompanyIds,
+        version: saved.version
       );
 
       _client = client;
@@ -353,6 +354,7 @@ class OdooSessionManager {
         ConnectivityService.instance.setCurrentServerUrl(normalizedUrl);
         _onSessionUpdated?.call(sessionData);
 
+
         return LoginStatus.success;
       } catch (e) {
         /// Handle HTML response error
@@ -478,12 +480,15 @@ class OdooSessionManager {
           password,
         );
 
+
         final sessionData = AppSessionData(
           odooSession: odooSession,
           password: password,
           serverUrl: normalizedUrl,
           database: database,
           expiresAt: DateTime.now().add(const Duration(hours: 24)),
+          selectedCompanyId: odooSession.companyId,
+          allowedCompanyIds: [odooSession.companyId]
         );
 
         _cachedSession = sessionData;

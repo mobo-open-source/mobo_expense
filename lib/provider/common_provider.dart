@@ -328,6 +328,7 @@ class CommonProvider extends ChangeNotifier {
       totalTax = taxes;
       notifyListeners();
     } catch (e) {
+      rethrow;
     } finally {
       isLoading = false;
       notifyListeners();

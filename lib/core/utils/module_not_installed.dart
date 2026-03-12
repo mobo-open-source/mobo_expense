@@ -30,7 +30,7 @@ class ModuleMissingDialog extends StatelessWidget {
             const SizedBox(height: 14),
 
             const Text(
-              'The required "Events" module is not installed. '
+              'The required "Expense" module is not installed. '
               'Please contact your administrator to enable it.',
               style: TextStyle(fontSize: 14, color: Colors.black87),
             ),

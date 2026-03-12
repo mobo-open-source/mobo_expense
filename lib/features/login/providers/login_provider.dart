@@ -507,8 +507,7 @@ class LoginProvider with ChangeNotifier {
       }
       _resetDatabaseState();
     } catch (e) {
-      errorMessage =
-          'Unable to connect to server. Please verify the server URL is correct.';
+      errorMessage = 'The listing database is currently disabled.';
       _resetDatabaseState();
     } finally {
       isLoadingDatabases = false;
@@ -580,6 +579,7 @@ class LoginProvider with ChangeNotifier {
       );
 
       if (loginSuccess == LoginStatus.success) {
+
         await _saveCredentials();
         await _setAuthenticationTimestamp();
 
@@ -589,7 +589,8 @@ class LoginProvider with ChangeNotifier {
           final currentSession = await OdooSessionManager.getCurrentSession();
 
           if (currentSession != null) {
-            await sessionService.storeAccount(currentSession, password);
+
+           // await sessionService.storeAccount(currentSession, password);
           }
         } catch (e) {}
 

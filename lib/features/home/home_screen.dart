@@ -41,7 +41,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
 
+
+
     if (widget.isTest == false) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          context.read<CompanyProvider>().initialize();
+          context.read<ProfileProvider>().fetchUserProfile();
+
+        }
+      });
+
+
       OdooSessionManager.getCurrentSession().then((session) {
         ConnectivityService.instance.setCurrentServerUrl(session?.serverUrl);
         if (mounted) {
@@ -52,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       });
     }
   }
+
+
 
   bool _isLoadingSession = true;
 
@@ -79,7 +92,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   static final List<Widget> _screensUser = <Widget>[
     DashboardScreen(),
     ExpensesScreen(),
-
     ReportScreen(),
   ];
 

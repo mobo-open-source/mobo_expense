@@ -14,6 +14,7 @@ import '../../../core/widgets/expense_card.dart';
 import '../../../core/widgets/pagination/pagination_controller.dart';
 import '../../../core/widgets/textform_search_listing.dart';
 import '../../../model/employee.dart';
+import '../../review/services/review_service.dart';
 
 class ExpensesScreen extends StatefulWidget {
   const ExpensesScreen({super.key});
@@ -29,6 +30,9 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       initialLoading();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ReviewService().checkAndShowRating(context);
     });
   }
 

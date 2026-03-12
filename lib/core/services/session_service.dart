@@ -242,7 +242,6 @@ class SessionService extends ChangeNotifier {
         'userId': session.userId.toString(),
         'userName': userDisplayName,
         'serverUrl': session.serverUrl,
-
         'sessionId': session.sessionId,
       };
 

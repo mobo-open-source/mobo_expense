@@ -26,7 +26,6 @@ class _AppEntryState extends State<AppEntry> {
   @override
   void initState() {
     super.initState();
-
     /// Start monitoring connectivity centrally
     ConnectivityService.instance.startMonitoring();
     _initFuture = _checkAuthStatus();
@@ -47,6 +46,7 @@ class _AppEntryState extends State<AppEntry> {
     if (isLoggedIn) {
       sessionValid = await OdooSessionManager.isSessionValid();
       if (!sessionValid) {
+
       } else {
         try {
           final client = await OdooSessionManager.getClientEnsured();
@@ -85,6 +85,18 @@ class _AppEntryState extends State<AppEntry> {
           'kwargs': {},
         });
         expenseInstalled = (count is int) ? count > 0 : (count as num) > 0;
+
+        if(expenseInstalled){
+          try {
+            final sessionService = SessionService.instance;
+            final currentSession = await OdooSessionManager.getCurrentSession();
+
+            if (currentSession != null) {
+              await sessionService.storeAccount(currentSession, currentSession.password,markAsCurrent: true);
+            }
+          } catch (e) {}
+
+        }
       } catch (e) {
         Navigator.pushReplacement(
           context,

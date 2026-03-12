@@ -229,13 +229,10 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
 
       final allowed = userCompanies.map((e) => e['id'] as int).toList();
 
-      final selectedCompany = allowed.isNotEmpty
-          ? allowed.first
-          : newSession.companyId;
-
+      final selectedCompany = newSession.companyId;
       final fixedSession = newSession.copyWith(
         selectedCompanyId: selectedCompany,
-        allowedCompanyIds: allowed,
+        allowedCompanyIds: newSession.allowedCompanyIds,
       );
       await fixedSession.saveToPrefs();
       await OdooSessionManager.updateSession(fixedSession);
@@ -245,11 +242,7 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
       Provider.of<ExpenseProvider>(context, listen: false).reset();
 
       /// Store the new account and mark as current
-      await sessionService.storeAccount(
-        fixedSession,
-        provider.passwordController.text,
-        markAsCurrent: true,
-      );
+
 
       /// Persist server URL history and server->database mapping for reuse
       try {
