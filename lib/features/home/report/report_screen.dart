@@ -50,7 +50,7 @@ class _ReportScreenState extends State<ReportScreen> {
         if (userProvider.isAdmin) {
           await commonProvider.getCompanyMonthlyExpense();
           await commonProvider.getCompanyWiseCategories();
-          if (version == '19') await commonProvider.getCompanyWiseDepartment();
+          if (version.contains('19')) await commonProvider.getCompanyWiseDepartment();
           await commonProvider.getCompanyEmployees();
         }
       }
@@ -83,7 +83,7 @@ class _ReportScreenState extends State<ReportScreen> {
             "Reimbursement",
             "Company",
             "All category",
-            if (odooVersion == "19") "Department",
+            if (odooVersion.contains('19')) "Department",
             "Employees",
           ]
         : ["Monthly Report", "Category", "Reimbursement"];
@@ -98,7 +98,7 @@ class _ReportScreenState extends State<ReportScreen> {
               categoryReport: commonProvider.companyCategoryReportList,
             ),
 
-            if (odooVersion == "19")
+            if (odooVersion.contains('19'))
               CompanyDepartment(
                 companyDepartment: commonProvider.companyDepartmentList,
               ),

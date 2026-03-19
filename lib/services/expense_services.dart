@@ -199,7 +199,7 @@ class ExpenseServices {
 
       final version = await session!.odooSession.serverVersion;
 
-      if (version == '18' || version == '17') {
+      if (version.contains('18') || version.contains('17')) {
         var res = await await OdooSessionManager.callKwWithCompany({
           'model': 'hr.expense',
           'method': 'search_read',
@@ -263,7 +263,7 @@ class ExpenseServices {
 
       final id = client!.sessionId?.userId;
 
-      if (version == '18' || version == '17') {
+      if (version.contains('18') || version.contains('17')) {
         var res = await OdooSessionManager.callKwWithCompany({
           'model': 'hr.expense',
           'method': 'search_read',
@@ -475,7 +475,7 @@ class ExpenseServices {
     try {
       final session = await OdooSessionManager.getCurrentSession();
       final version = session!.odooSession.serverVersion;
-      final bool isOdoo18 = version == '18' || version == '17';
+      final bool isOdoo18 = version.contains('18') || version.contains('17');
 
       /// Fetch expenses
       final res = await OdooSessionManager.callKwWithCompany({

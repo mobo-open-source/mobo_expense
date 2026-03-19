@@ -23,6 +23,7 @@ import '../../../core/widgets/textform_search_listing.dart';
 import '../../../model/employee.dart';
 import '../../../provider/bottom_nav_provider.dart';
 import '../../../shared/widgets/snackbars/custom_snackbar.dart';
+import '../../review/services/review_service.dart';
 import '../home_screen.dart';
 
 class AddExpensesScreen extends StatefulWidget {
@@ -493,6 +494,8 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
                                     context,
                                     "Successfully added Expense",
                                   );
+
+                                  ReviewService().trackSignificantEvent();
 
                                   Navigator.pushAndRemoveUntil(
                                     context,

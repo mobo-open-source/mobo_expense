@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:mobo_expenses/core/constants/constants.dart';
 import 'package:odoo_rpc/odoo_rpc.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,10 +14,12 @@ import '../../../core/services/session_service.dart';
 import '../../../core/services/odoo_session_manager.dart';
 import '../../../core/services/biometric_context_service.dart';
 import '../../../shared/widgets/snackbars/custom_snackbar.dart';
+import '../../company/providers/company_provider.dart';
 import '../../login/pages/credentials_screen.dart';
 import '../../../core/routing/page_transition.dart';
 import '../../login/pages/otp_page.dart';
 import '../../login/pages/server_setup_screen.dart';
+import '../providers/profile_provider.dart';
 
 class SwitchAccountWidget extends StatelessWidget {
   const SwitchAccountWidget({super.key});
@@ -33,14 +36,7 @@ class SwitchAccountWidget extends StatelessWidget {
 
         final otherAccounts = sessionService.storedAccounts.where((account) {
           if (currentSession == null) return false;
-
-          if (account['serverUrl'] != currentSession.serverUrl) {
-            return false;
-          }
-
-          if (account['database'] != currentSession.database) {
-            return false;
-          }
+          if (account['userId'] == currentSession.userId) return false;
 
           return !_isCurrentAccount(account, sessionService);
         }).toList();
@@ -236,45 +232,24 @@ class SwitchAccountWidget extends StatelessWidget {
         ),
         trailing: isCurrent
             ? null
-            : PopupMenuButton<String>(
-                icon: Icon(
-                  Icons.more_vert,
-                  color: isDark ? Colors.grey[400] : Colors.grey[600],
-                  size: 18,
-                ),
-                onSelected: (value) async {
-                  if (value == 'remove') {
-                    await _removeAccount(context, account, sessionService);
-                  }
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem<String>(
-                    value: 'remove',
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.delete_outline,
-                          size: 18,
-                          color: Colors.red[600],
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Remove',
-                          style: TextStyle(
-                            color: Colors.red[600],
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
+            : InkWell(
+                onTap: isCurrent
+                    ? null
+                    : () async {
+                        await _switchAccount(context, account, sessionService);
+                      },
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "Switch",
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
                     ),
                   ),
-                ],
+                ),
               ),
-        onTap: isCurrent
-            ? null
-            : () async {
-                await _switchAccount(context, account, sessionService);
-              },
       ),
     );
   }
@@ -613,17 +588,17 @@ class SwitchAccountWidget extends StatelessWidget {
 
       final client = await OdooSessionManager.getClientEnsured();
 
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<CompanyProvider>().initialize();
+        context.read<ProfileProvider>().fetchUserProfile();
+      });
+
       final userCompanies = await OdooSessionManager.getAllowedCompaniesList();
-
-      final allowed = userCompanies.map((e) => e['id'] as int).toList();
-
-      final selectedCompany = allowed.isNotEmpty
-          ? allowed.first
-          : newSession.companyId;
+      final selectedCompany = newSession.companyId;
 
       final fixedSession = newSession.copyWith(
         selectedCompanyId: selectedCompany,
-        allowedCompanyIds: allowed,
+        allowedCompanyIds: newSession.allowedCompanyIds,
       );
 
       /// Save corrected session

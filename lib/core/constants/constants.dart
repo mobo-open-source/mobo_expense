@@ -92,3 +92,14 @@ String logoImg = 'assets/expenses-logo.png';
 String authBgImg = 'assets/auth_bg_img.jpg';
 String profile = 'assets/profile.jpg';
 String category = 'assets/images.jpeg';
+
+const Color primaryColor = Color(0xFFC03355);
+
+final whiteColor = Colors.white;
+
+final backgroundColor = Color(0xFFF7F7F7);
+
+final secondaryColor = const Color(0xFF9EA700);
+final fillColor = const Color(0xFFF1F3F5);
+
+final blackColor =  Colors.black87;

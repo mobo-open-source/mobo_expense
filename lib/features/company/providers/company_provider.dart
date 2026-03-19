@@ -97,8 +97,7 @@ class CompanyProvider extends ChangeNotifier {
           final raw = row['company_ids'] as List;
           companyIds = raw.whereType<int>().toList();
         }
-        if (row['company_id'] is List &&
-            (row['company_id'] as List).isNotEmpty) {
+        if (row['company_id'] is List && (row['company_id'] as List).isNotEmpty) {
           currentCompanyId = (row['company_id'] as List).first as int?;
         }
       }
